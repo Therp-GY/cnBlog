@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">博客园T_T</string>
+    <string name="title_home">首页</string>
+    <string name="title_blink">动态</string>
+    <string name="title_question">问答</string>
+    <string name="title_edu">班级</string>
+    <string name="title_user">我的</string>
+    <string name="title_activity_blink_main">BlinkMainActivity</string>
+    <string name="tab_blink_recommend">推荐</string>
+    <string name="tab_blink_attention">关注</string>
+    <string name="tab_blink_mine">我的</string>
+    <string name="tab_blink_deliver">发布</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
