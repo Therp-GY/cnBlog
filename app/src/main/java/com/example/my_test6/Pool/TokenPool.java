@@ -5,6 +5,8 @@ import com.example.my_test6.netWork.TokenString;
 
 public class TokenPool {
     private static  TokenPool tokenPool = null;
+    public String UserToken = "";
+    public boolean isLogin = false;
     private TokenString token = new TokenString();
     private TokenPool(){
 
