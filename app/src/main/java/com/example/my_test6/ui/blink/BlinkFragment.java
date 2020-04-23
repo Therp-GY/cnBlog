@@ -1,6 +1,8 @@
 package com.example.my_test6.ui.blink;
 
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +22,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlinkFragment extends Fragment {
-
     static final int NUM_ITEMS = 4;
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
-    private String[] strings = new String[]{"推荐","关注","我的","发布"};
+    private String[] strings = new String[]{"推荐", "关注", "我的", "发布"};
+    public static final String TAG = "BlinkFragment";
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: ");
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_blink, container, false);
         fragmentList.add(new RecommendFragment());
         fragmentList.add(new AttentionFragment());
@@ -35,9 +43,10 @@ public class BlinkFragment extends Fragment {
         fragmentList.add(new DeliverFragment());
         TabLayout tab_layout = root.findViewById(R.id.tab_layout);
         ViewPager viewPager = root.findViewById(R.id.viewPager);
-        MyAdapter fragmentAdater = new  MyAdapter(getChildFragmentManager()); //    注意使用getChildFragmentManager()
+        MyAdapter fragmentAdater = new MyAdapter(getChildFragmentManager()); //    注意使用getChildFragmentManager()
         viewPager.setAdapter(fragmentAdater);
         tab_layout.setupWithViewPager(viewPager);
+        Log.d(TAG, "onCreateView: ");
         return root;
     }
 
@@ -61,6 +70,10 @@ public class BlinkFragment extends Fragment {
         @Override
         public CharSequence getPageTitle(int position) {
             return strings[position];
+        }
+
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         }
     }
 

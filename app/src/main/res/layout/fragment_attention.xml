@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.blink.AttentionFragment">
 
-    <ListView
-        android:id="@android:id/list"
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/attention_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-    </ListView>
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </RelativeLayout>

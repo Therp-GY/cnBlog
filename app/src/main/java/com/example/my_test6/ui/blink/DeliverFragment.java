@@ -1,9 +1,15 @@
 package com.example.my_test6.ui.blink;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,13 +37,15 @@ import okhttp3.ResponseBody;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DeliverFragment extends Fragment {
+public class DeliverFragment extends Fragment implements View.OnClickListener{
 
     private Button deliver;
+    private Button test_service;
     private  static  String TAG = "DeliverFragment";
 
     public DeliverFragment() {
     }
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +56,27 @@ public class DeliverFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_deliver, container, false);
         deliver = view.findViewById(R.id.deliver);
+        deliver.setOnClickListener(this);
+        test_service = view.findViewById(R.id.test_service);
+        test_service.setOnClickListener(this);
         return view;
     }
 
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.deliver:
+                Toast.makeText(getActivity(), "发送成功", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.test_service:
+                Intent intent = new Intent(getActivity(),test_service.class);
+                startActivity(intent);
+                Toast.makeText(getActivity(), "测试服务", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
 
 
 }

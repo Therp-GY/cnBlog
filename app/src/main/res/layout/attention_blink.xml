@@ -3,40 +3,40 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--方形头像-->
+
     <ImageView
         android:id="@+id/lv_headPortrait"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_centerVertical="true"/>
+        android:layout_width="74dp"
+        android:layout_height="52dp" />
 
     <TextView
         android:id="@+id/tv_blinkName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tv_blinkBlink"
-        android:layout_alignStart="@+id/tv_blinkBlink"
         android:layout_alignTop="@+id/lv_headPortrait"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="TextView"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_blinkBlink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_blinkName"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/lv_headPortrait"
         android:layout_toRightOf="@+id/lv_headPortrait"
         android:ellipsize="end"
-        android:maxLines="2"
         android:text="list view item"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="14sp" />
+        android:textSize="18sp" />
 
 
 </RelativeLayout>
