@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
 import com.example.my_test6.netWork.GetApi;
+import com.example.my_test6.netWork.GetUserApi;
 import com.example.my_test6.ui.blink.adapter.blinkListAdapter;
 import com.example.my_test6.ui.blink.domain.blinkInfo;
 import com.google.gson.Gson;
@@ -142,6 +143,6 @@ public class AttentionFragment extends Fragment {
         url = url + "@" + type + "?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&tag=" + tag;
         Log.d(TAG, "getBlink: " + url);
         GetApi getApi = new GetApi();
-        getApi.getMyApi(handler, url, token, what);
+        getApi.getMyApi(handler, url,  what);
     }
 }

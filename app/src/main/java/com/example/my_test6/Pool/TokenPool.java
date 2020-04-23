@@ -35,4 +35,20 @@ public class TokenPool {
             token.notifyAll();
         }
     }
+
+    public void setUserToken(String userToken) {
+        UserToken = userToken;
+    }
+
+    public String getUserToken() {
+        return UserToken;
+    }
+
+    public boolean isLogin() {
+        return isLogin;
+    }
+
+    public void setLogin(boolean login) {
+        isLogin = login;
+    }
 }

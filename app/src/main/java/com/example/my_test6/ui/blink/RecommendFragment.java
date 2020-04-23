@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
 import com.example.my_test6.netWork.GetApi;
+import com.example.my_test6.netWork.GetUserApi;
 import com.example.my_test6.ui.blink.adapter.blinkListAdapter;
 import com.example.my_test6.ui.blink.domain.blinkInfo;
 import com.google.gson.Gson;
@@ -42,6 +43,7 @@ public class RecommendFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             String s = (String) msg.obj;
+            Log.d(TAG, "handleMessage: "+s);
             Type blinkListType = new TypeToken<ArrayList<blinkInfo>>() {
             }.getType();
             List<blinkInfo> blinkInfoList_temp;
@@ -151,7 +153,7 @@ public class RecommendFragment extends Fragment {
         Log.d(TAG, "getBlinkNew: " + token);
         String url = "https://api.cnblogs.com/api/statuses/recent";
         GetApi getApi = new GetApi();
-        getApi.getMyApi(handler, url, token, BLINK_INIT);
+        getApi.getMyApi(handler, url, BLINK_INIT);
     }
 
     private void getBlink(final Handler handler, String type, String pageIndex, String pageSize, String tag, final int what) {
@@ -160,6 +162,6 @@ public class RecommendFragment extends Fragment {
         url = url + "@" + type + "?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&tag=" + tag;
         Log.d(TAG, "getBlink: " + url);
         GetApi getApi = new GetApi();
-        getApi.getMyApi(handler, url, token, what);
+        getApi.getMyApi(handler, url, what);
     }
 }
