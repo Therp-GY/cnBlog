@@ -143,5 +143,6 @@ public class AttentionFragment extends Fragment {
         Log.d(TAG, "getBlink: " + url);
         GetApi getApi = new GetApi();
         getApi.getMyApi(handler, url, token, what);
+        String a;
     }
 }
