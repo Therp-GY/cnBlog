@@ -42,7 +42,7 @@ public class GetToken {
                     //    Log.d("TAG",result);
                     Gson gson1 = new Gson();
                     Token token1= gson1.fromJson(result, Token.class);
-                    TokenPool.myToken = token1.getAccess_token();
+                    TokenPool.getTokenPool().setMyToken(token1.getAccess_token());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

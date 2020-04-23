@@ -64,7 +64,7 @@ public class MineFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getBlink(handler,"2","30","1","1",BLINK_INIT);
+        getBlink(handler,"2","20","1","1",BLINK_INIT);
         Log.d(TAG, "onCreate: ");
     }
 
@@ -139,7 +139,7 @@ public class MineFragment extends Fragment {
     }
 
     private void getBlink(final Handler handler, String type, String pageIndex, String pageSize, String tag, final int what) {
-        final String token = TokenPool.myToken;
+        final String token = TokenPool.getTokenPool().getMyToken();
         String url = "https://api.cnblogs.com/api/statuses/";
         url = url + "@" + type + "?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&tag=" + tag;
         Log.d(TAG, "getBlink: " + url);

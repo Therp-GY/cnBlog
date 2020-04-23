@@ -147,7 +147,7 @@ public class RecommendFragment extends Fragment {
 
 
     private void getBlinkNew(final Handler handler) {
-        final String token = TokenPool.myToken;
+        final String token = TokenPool.getTokenPool().getMyToken();
         Log.d(TAG, "getBlinkNew: " + token);
         String url = "https://api.cnblogs.com/api/statuses/recent";
         GetApi getApi = new GetApi();
@@ -155,7 +155,7 @@ public class RecommendFragment extends Fragment {
     }
 
     private void getBlink(final Handler handler, String type, String pageIndex, String pageSize, String tag, final int what) {
-        final String token = TokenPool.myToken;
+        final String token = TokenPool.getTokenPool().getMyToken();
         String url = "https://api.cnblogs.com/api/statuses/";
         url = url + "@" + type + "?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&tag=" + tag;
         Log.d(TAG, "getBlink: " + url);
