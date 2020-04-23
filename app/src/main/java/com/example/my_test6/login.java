@@ -17,6 +17,8 @@ import com.example.my_test6.Bean.Token;
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
 import com.example.my_test6.netWork.GetUserToken;
+import com.example.my_test6.ui.blink.domain.accessToken;
+import com.google.gson.Gson;
 
 public class login extends AppCompatActivity {
     private String Usertoken;
@@ -26,13 +28,8 @@ public class login extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if(msg.what == 0x2){
-                Usertoken = (String) msg.obj;
-                int i = Usertoken.indexOf("\"",17);
-                Usertoken = Usertoken.substring(17,i);
-                //editor.putString("UserToken",Usertoken);
-                //editor.commit();
-                TokenPool.getTokenPool().UserToken = Usertoken;
-                TokenPool.getTokenPool().isLogin = true;
+                String token = (String) msg.obj;
+                TokenPool.getTokenPool().setUserToken(token);
                 System.out.println("UserToken " + Usertoken);
                 login.this.finish();
             }
@@ -65,10 +62,13 @@ public class login extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             if(request.getUrl().toString().substring(0,39).equals("https://oauth.cnblogs.com/auth/callback")){
-                int p = request.getUrl().toString().indexOf("&",45);
+                String s = request.getUrl().toString();
                 //System.out.println("code " + request.getUrl().toString().substring(45,p));
-                GetUserToken get = new GetUserToken(request.getUrl().toString().substring(45,p),handler);
-                get.gettoken();
+                Gson gson = new Gson();
+                accessToken accessToken = gson.fromJson(s, com.example.my_test6.ui.blink.domain.accessToken.class);
+                Message message = new Message();
+                message.what = 0x2;
+                message.obj = accessToken.getToken();
                 return true;
             }
             return false;

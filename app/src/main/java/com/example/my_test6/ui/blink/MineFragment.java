@@ -72,6 +72,7 @@ public class MineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.blink_fragment_mine, container, false);
         refreshListView = (PullToRefreshListView) view.findViewById(R.id.mine_list);
         //设置可上拉刷新和下拉刷新

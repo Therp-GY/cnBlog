@@ -37,6 +37,7 @@ public class DeliverFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.blink_fragment_deliver, container, false);
         deliver = view.findViewById(R.id.deliver);
         deliver.setOnClickListener(this);
@@ -51,6 +52,7 @@ public class DeliverFragment extends Fragment implements View.OnClickListener{
     public void onResume() {
         deliver.setOnClickListener(this);
         Log.d(TAG, "onResume: ");
+        Log.d(TAG, "onResume: "+TokenPool.getTokenPool().getUserToken());
         super.onResume();
     }
 
