@@ -1,4 +1,4 @@
-package com.example.my_test6;
+package com.example.my_test6.ui.user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,19 +17,28 @@ import com.example.my_test6.Bean.Token;
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
 import com.example.my_test6.netWork.GetUserToken;
-import com.example.my_test6.ui.blink.domain.accessToken;
 import com.google.gson.Gson;
 
 public class login extends AppCompatActivity {
     private String Usertoken;
+    private SharedPreferences sharedpreferences;
+    private SharedPreferences.Editor editor;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if(msg.what == 0x2){
-                String token = (String) msg.obj;
-                TokenPool.getTokenPool().setUserToken(token);
+                Usertoken = (String) msg.obj;
+                int p1 = Usertoken.indexOf("access_token",0);
+                int p2 = Usertoken.indexOf(":",p1) + 2;
+                int p3 = Usertoken.indexOf("\"",p2);
+                Usertoken = Usertoken.substring(p2, p3);
+                editor.putString("UserToken",Usertoken);
+                editor.putBoolean("isLogin",true);
+                editor.commit();
+                //TokenPool.getTokenPool().UserToken = Usertoken;
+                //TokenPool.getTokenPool().isLogin = true;
                 System.out.println("UserToken " + Usertoken);
                 login.this.finish();
             }
@@ -62,13 +71,12 @@ public class login extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             if(request.getUrl().toString().substring(0,39).equals("https://oauth.cnblogs.com/auth/callback")){
-                String s = request.getUrl().toString();
+                sharedpreferences = getApplication().getSharedPreferences("User",Context.MODE_PRIVATE);
+                editor = sharedpreferences.edit();
+                int p = request.getUrl().toString().indexOf("&",45);
                 //System.out.println("code " + request.getUrl().toString().substring(45,p));
-                Gson gson = new Gson();
-                accessToken accessToken = gson.fromJson(s, com.example.my_test6.ui.blink.domain.accessToken.class);
-                Message message = new Message();
-                message.what = 0x2;
-                message.obj = accessToken.getToken();
+                GetUserToken get = new GetUserToken(request.getUrl().toString().substring(45,p),handler);
+                get.gettoken();
                 return true;
             }
             return false;

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.blink.WebViewActivity"></activity>
-        <activity android:name=".login"></activity>
+        <activity android:name=".ui.user.login"></activity>
         <service
             android:name=".ui.blink.MyBlinkService"
             android:enabled="true"

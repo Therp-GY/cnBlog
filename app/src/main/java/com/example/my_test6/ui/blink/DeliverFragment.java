@@ -1,6 +1,8 @@
 package com.example.my_test6.ui.blink;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
-import com.example.my_test6.login;
+import com.example.my_test6.ui.user.login;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +26,8 @@ public class DeliverFragment extends Fragment implements View.OnClickListener{
     private Button deliver;
     private Button test_service;
     private  static  String TAG = "DeliverFragment";
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
 
     public DeliverFragment() {
     }
@@ -45,6 +49,7 @@ public class DeliverFragment extends Fragment implements View.OnClickListener{
             Intent intent = new Intent(getActivity(), login.class);
             startActivity(intent);
         }
+        sp = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
         return view;
     }
 
