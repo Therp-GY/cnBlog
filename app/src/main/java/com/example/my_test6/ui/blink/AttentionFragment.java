@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
 
 import android.os.Handler;
 import android.os.Message;
@@ -73,7 +72,7 @@ public class AttentionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_attention, container, false);
+        View view = inflater.inflate(R.layout.blink_fragment_attention, container, false);
         refreshListView = (PullToRefreshListView) view.findViewById(R.id.attention_list);
         //设置可上拉刷新和下拉刷新
         refreshListView.setMode(PullToRefreshBase.Mode.BOTH);
@@ -90,16 +89,13 @@ public class AttentionFragment extends Fragment {
         refreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(final PullToRefreshBase<ListView> refreshView) {
-                // TODO Auto-generated method stub
                 new AsyncTask<Void, Void, Void>() {
                     @Override
                     protected Void doInBackground(Void... params) {
                         Log.d(TAG, "doInBackground: ");
-                        // TODO Auto-generated method stub
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                         return null;

@@ -69,7 +69,7 @@ public class RecommendFragment extends Fragment {
                              Bundle savedInstanceState) {
         //  pageIndex和pageSize有用，表示页码和页容量
         getBlink(handler, "2", pageIndex.toString(), "50", "2", BLINK_INIT);
-        View view = inflater.inflate(R.layout.fragment_recommend, container, false);
+        View view = inflater.inflate(R.layout.blink_fragment_recommend, container, false);
         refreshListView = (PullToRefreshListView) view.findViewById(R.id.recommend_list);
         //设置可上拉刷新和下拉刷新
         refreshListView.setMode(PullToRefreshBase.Mode.BOTH);

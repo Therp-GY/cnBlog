@@ -15,7 +15,7 @@
         android:id="@+id/navigation_blink"
         android:name="com.example.my_test6.ui.blink.BlinkFragment"
         android:label="@string/title_blink"
-        tools:layout="@layout/fragment_blink" />
+        tools:layout="@layout/blink_fragment_home" />
 
     <fragment
         android:id="@+id/navigation_question"

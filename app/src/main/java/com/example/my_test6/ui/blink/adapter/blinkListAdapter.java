@@ -2,7 +2,6 @@ package com.example.my_test6.ui.blink.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.my_test6.MainActivity;
 import com.example.my_test6.R;
 import com.example.my_test6.ui.blink.WebViewActivity;
 import com.example.my_test6.ui.blink.domain.blinkInfo;
@@ -52,11 +50,11 @@ public class blinkListAdapter extends  BaseAdapter{
     @Override
     public View getView(int position, final View convertView, ViewGroup parent) {
 //        Log.d(TAG, "getView: "+position);
-        View view = layoutInflater.inflate(R.layout.attention_blink,null);
+        View view = layoutInflater.inflate(R.layout.blink_item,null);
         final blinkInfo blinkInfo = blinkInfoList.get(position);
-        final ImageView blinkImage = view.findViewById(R.id.lv_headPortrait);
-        TextView blinkName = view.findViewById(R.id.tv_blinkName);
-        TextView blinkBlink = view.findViewById(R.id.tv_blinkBlink);
+        final ImageView blinkImage = view.findViewById(R.id.img_blog_avatar);
+        TextView blinkName = view.findViewById(R.id.tv_blog_author);
+        TextView blinkBlink = view.findViewById(R.id.tv_blog_summary);
         blinkName.setText(blinkInfo.getUserDisplayName());
         blinkBlink.setText(blinkInfo.getContent());
         Glide.with(view).load(blinkInfo.getUserIconUrl()).into(blinkImage);

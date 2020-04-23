@@ -1,7 +1,6 @@
 package com.example.my_test6.ui.blink;
 
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +35,7 @@ public class BlinkFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_blink, container, false);
+        View root = inflater.inflate(R.layout.blink_fragment_home, container, false);
         fragmentList.add(new RecommendFragment());
         fragmentList.add(new AttentionFragment());
         fragmentList.add(new MineFragment());

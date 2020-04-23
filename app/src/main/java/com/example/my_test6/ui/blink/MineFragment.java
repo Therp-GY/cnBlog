@@ -18,7 +18,6 @@ import com.example.my_test6.R;
 import com.example.my_test6.netWork.GetApi;
 import com.example.my_test6.ui.blink.adapter.blinkListAdapter;
 import com.example.my_test6.ui.blink.domain.blinkInfo;
-import com.example.my_test6.ui.blink.domain.clientInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
@@ -72,7 +71,7 @@ public class MineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mine, container, false);
+        View view = inflater.inflate(R.layout.blink_fragment_mine, container, false);
         refreshListView = (PullToRefreshListView) view.findViewById(R.id.mine_list);
         //设置可上拉刷新和下拉刷新
         refreshListView.setMode(PullToRefreshBase.Mode.BOTH);
