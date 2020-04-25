@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.my_test6.Bean.Token;
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
 import com.example.my_test6.ui.user.login;
@@ -21,13 +24,9 @@ import com.example.my_test6.ui.user.login;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DeliverFragment extends Fragment implements View.OnClickListener{
+public class DeliverFragment extends Fragment {
 
-    private Button deliver;
-    private Button test_service;
     private  static  String TAG = "DeliverFragment";
-    private SharedPreferences sp;
-    private SharedPreferences.Editor editor;
 
     public DeliverFragment() {
     }
@@ -35,7 +34,6 @@ public class DeliverFragment extends Fragment implements View.OnClickListener{
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -43,32 +41,29 @@ public class DeliverFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.blink_fragment_deliver, container, false);
-        deliver = view.findViewById(R.id.deliver);
-        deliver.setOnClickListener(this);
-        if(!TokenPool.getTokenPool().isLogin()){
-            Intent intent = new Intent(getActivity(), login.class);
-            startActivity(intent);
-        }
-        sp = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+        setUI();
         return view;
+    }
+
+    private void setUI(){
+        if(TokenPool.getTokenPool().isLogin()){
+            FragmentManager fragmentManager = getChildFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.deliver_frame,new DeliverLoginFragment());
+            fragmentTransaction.commit();
+        }else{
+            FragmentManager fragmentManager = getChildFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.deliver_frame,new LoginFragment());
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
     public void onResume() {
-        deliver.setOnClickListener(this);
-        Log.d(TAG, "onResume: ");
-        Log.d(TAG, "onResume: "+TokenPool.getTokenPool().getUserToken());
         super.onResume();
+        setUI();
+        Log.d(TAG, "onResume: ");
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.deliver:
-                Toast.makeText(getActivity(), "发送成功", Toast.LENGTH_SHORT).show();
-                break;
-        }
-    }
-
 
 }

@@ -1,23 +1,34 @@
 package com.example.my_test6.ui.user;
 
+import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.example.my_test6.Bean.Token;
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
 import com.example.my_test6.netWork.GetUserToken;
-import com.google.gson.Gson;
+
+import java.io.File;
 
 public class login extends AppCompatActivity {
     private String Usertoken;
@@ -37,8 +48,8 @@ public class login extends AppCompatActivity {
                 editor.putString("UserToken",Usertoken);
                 editor.putBoolean("isLogin",true);
                 editor.commit();
-                //TokenPool.getTokenPool().UserToken = Usertoken;
-                //TokenPool.getTokenPool().isLogin = true;
+                TokenPool.getTokenPool().UserToken = Usertoken;
+                TokenPool.getTokenPool().isLogin = true;
                 System.out.println("UserToken " + Usertoken);
                 login.this.finish();
             }
@@ -51,6 +62,7 @@ public class login extends AppCompatActivity {
         getSupportActionBar().hide();
 
         WebView webview = findViewById(R.id.login_WebView);
+        clearCache(this);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setUseWideViewPort(true); //将图片调整到适合webview的大小
         webview.getSettings().setLoadWithOverviewMode(true); // 缩放至屏幕的大小
@@ -71,7 +83,7 @@ public class login extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             if(request.getUrl().toString().substring(0,39).equals("https://oauth.cnblogs.com/auth/callback")){
-                sharedpreferences = getApplication().getSharedPreferences("User",Context.MODE_PRIVATE);
+                sharedpreferences = getApplication().getSharedPreferences("User", Context.MODE_PRIVATE);
                 editor = sharedpreferences.edit();
                 int p = request.getUrl().toString().indexOf("&",45);
                 //System.out.println("code " + request.getUrl().toString().substring(45,p));
@@ -81,5 +93,44 @@ public class login extends AppCompatActivity {
             }
             return false;
         }
+    }
+    public static void clearCache(Context context) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { // 清除cookie
+                CookieManager.getInstance().removeAllCookies(null);
+            } else {
+                CookieSyncManager.createInstance(context);
+                CookieManager.getInstance().removeAllCookie();
+                CookieSyncManager.getInstance().sync();
+            }
+
+            new WebView(context).clearCache(true);
+
+            File cacheFile = new File(context.getCacheDir().getParent() + "/app_webview");
+            clearCacheFolder(cacheFile, System.currentTimeMillis());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static int clearCacheFolder(File dir, long time) {
+        int deletedFiles = 0;
+        if (dir != null && dir.isDirectory()) {
+            try {
+                for (File child : dir.listFiles()) {
+                    if (child.isDirectory()) {
+                        deletedFiles += clearCacheFolder(child, time);
+                    }
+                    if (child.lastModified() < time) {
+                        if (child.delete()) {
+                            deletedFiles++;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return deletedFiles;
     }
 }
