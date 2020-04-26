@@ -59,15 +59,6 @@ public class blinkListAdapter extends  BaseAdapter{
         blinkBlink.setText(blinkInfo.getContent());
         Glide.with(view).load(blinkInfo.getUserIconUrl()).into(blinkImage);
 
-        blinkImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = "https://home.cnblogs.com/u/" + blinkInfo.getUserAlias();
-                Intent intent = new Intent(context, WebViewActivity.class);
-                intent.putExtra("url",url);
-                context.startActivity(intent);
-            }
-        });
         return view;
     }
 
