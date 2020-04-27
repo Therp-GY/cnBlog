@@ -3,8 +3,6 @@ package com.example.my_test6.ui.blink;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -13,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
 import com.example.my_test6.netWork.GetApi;
+import com.example.my_test6.netWork.GetUserApi;
 import com.example.my_test6.ui.blink.adapter.blinkListAdapter;
 import com.example.my_test6.ui.blink.blinkBean.blinkInfo;
 import com.google.gson.Gson;
@@ -24,26 +25,34 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+public class MineLoginFragment extends Fragment {
 
-public class RecommendFragment extends Fragment {
+
+
     private static final int BLINK_INIT = 1;
     private static final int BLINK_ADD = 2;
     private Integer pageIndex = 1;
-    private Integer pageSize = 50;
+    private Integer pageSize = 10;
+    private String tag = "1";
     private PullToRefreshListView refreshListView;
     private List<blinkInfo> blinkInfoList = new ArrayList<>();
     private blinkListAdapter blinkListAdapter;
-    private static String TAG = "RecommendFragment";
+    private static String TAG = "MineLoginFragment";
 
-    public Handler handler = new Handler() {
+
+    final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             String s = (String) msg.obj;
-            Log.d(TAG, "handleMessage: "+s);
             Type blinkListType = new TypeToken<ArrayList<blinkInfo>>() {
             }.getType();
             List<blinkInfo> blinkInfoList_temp;
@@ -61,6 +70,7 @@ public class RecommendFragment extends Fragment {
         }
     };
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: ");
@@ -69,10 +79,10 @@ public class RecommendFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //  pageIndex和pageSize有用，表示页码和页容量
-        getBlink(handler, "2", pageIndex.toString(), pageSize.toString(), "2", BLINK_INIT);
-        View view = inflater.inflate(R.layout.blink_fragment_recommend, container, false);
-        refreshListView = (PullToRefreshListView) view.findViewById(R.id.recommend_list);
+        Log.d(TAG, "onCreateView: ");
+        getMineBlink(handler,pageIndex.toString(),pageSize.toString(),tag, BLINK_INIT);
+        View view = inflater.inflate(R.layout.blink_fragment_mine_login, container, false);
+        refreshListView = (PullToRefreshListView) view.findViewById(R.id.mine_list);
         //设置可上拉刷新和下拉刷新
         refreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         //设置刷新时显示的文本
@@ -85,7 +95,6 @@ public class RecommendFragment extends Fragment {
         endLayout.setPullLabel("正在上拉刷新...");
         endLayout.setRefreshingLabel("正在玩命加载中...");
         endLayout.setReleaseLabel("放开以刷新");
-
         refreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(final PullToRefreshBase<ListView> refreshView) {
@@ -108,11 +117,9 @@ public class RecommendFragment extends Fragment {
                         Log.d(TAG, "onPostExecute: ");
                         blinkInfoList.clear();
                         pageIndex = 1;
-                        getBlink(handler, "2", pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
+                        getMineBlink(handler,  pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
                         refreshView.onRefreshComplete();
                     }
-
-                    ;
                 }.execute();
             }
 
@@ -134,8 +141,8 @@ public class RecommendFragment extends Fragment {
 
                     protected void onPostExecute(Void result) {
                         Log.d(TAG, "onPostExecute: ");
-                        pageIndex++;
-                        getBlink(handler, "2", pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
+                        pageIndex ++;
+                        getMineBlink(handler,  pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
                         refreshView.onRefreshComplete();
                     }
 
@@ -143,25 +150,15 @@ public class RecommendFragment extends Fragment {
                 }.execute();
             }
         });
-        Log.d(TAG, "onCreateView: ");
         return view;
     }
 
-
-    private void getBlinkNew(final Handler handler) {
-        final String token = TokenPool.getTokenPool().getMyToken();
-        Log.d(TAG, "getBlinkNew: " + token);
-        String url = "https://api.cnblogs.com/api/statuses/recent";
-        GetApi getApi = new GetApi();
-        getApi.getMyApi(handler, url, BLINK_INIT);
-    }
-
-    private void getBlink(final Handler handler, String type, String pageIndex, String pageSize, String tag, final int what) {
+    private void getMineBlink(final Handler handler, String pageIndex, String pageSize, String tag, final int what) {
         final String token = TokenPool.getTokenPool().getMyToken();
         String url = "https://api.cnblogs.com/api/statuses/";
-        url = url + "@" + type + "?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&tag=" + tag;
+        url = url + "@" + "my" + "?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&tag=" + tag;
         Log.d(TAG, "getBlink: " + url);
-        GetApi getApi = new GetApi();
-        getApi.getMyApi(handler, url, what);
+        GetUserApi getUserApi = new GetUserApi();
+        getUserApi.getMyApi(handler, url, what);
     }
 }

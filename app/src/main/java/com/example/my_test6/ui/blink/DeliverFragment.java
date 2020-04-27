@@ -49,12 +49,12 @@ public class DeliverFragment extends Fragment {
         if(TokenPool.getTokenPool().isLogin()){
             FragmentManager fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.deliver_frame,new DeliverLoginFragment());
+            fragmentTransaction.replace(R.id.deliver_frame,new DeliverLoginFragment());
             fragmentTransaction.commit();
         }else{
             FragmentManager fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.deliver_frame,new LoginFragment());
+            fragmentTransaction.replace(R.id.deliver_frame,new LoginFragment());
             fragmentTransaction.commit();
         }
     }

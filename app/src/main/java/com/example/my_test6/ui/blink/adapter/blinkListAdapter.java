@@ -1,7 +1,6 @@
 package com.example.my_test6.ui.blink.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.my_test6.R;
-import com.example.my_test6.ui.blink.WebViewActivity;
-import com.example.my_test6.ui.blink.domain.blinkInfo;
+import com.example.my_test6.ui.blink.blinkBean.blinkInfo;
 
 import java.util.List;
 

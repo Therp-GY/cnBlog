@@ -1,4 +1,4 @@
-package com.example.my_test6.ui.blink.domain;
+package com.example.my_test6.ui.blink.blinkBean;
 
 public class blinkInfo {
     String Id;

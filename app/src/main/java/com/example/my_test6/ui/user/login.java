@@ -18,15 +18,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.example.my_test6.Pool.MinePool;
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
+import com.example.my_test6.netWork.GetUserApi;
 import com.example.my_test6.netWork.GetUserToken;
+import com.example.my_test6.ui.user.GsonBean.Users;
+import com.google.gson.Gson;
 
 import java.io.File;
 
@@ -51,7 +56,23 @@ public class login extends AppCompatActivity {
                 TokenPool.getTokenPool().UserToken = Usertoken;
                 TokenPool.getTokenPool().isLogin = true;
                 System.out.println("UserToken " + Usertoken);
-                login.this.finish();
+                final Handler handler1 = new Handler() {
+                    @Override
+                    public void handleMessage(@NonNull Message msg) {
+                        super.handleMessage(msg);
+                        if (msg.what == 0x1) {//收到users信息
+                            Gson gson = new Gson();
+                            String json = (String) msg.obj;
+                            Users users;
+                            users = gson.fromJson(json, Users.class);
+                            MinePool.getMinePool().users = users;
+                            login.this.finish();
+                        }
+                    }
+                };
+                GetUserApi api = new GetUserApi();
+                String url = "https://api.cnblogs.com/api/users";
+                api.getMyApi(handler1, url, 1);
             }
         }
     };
