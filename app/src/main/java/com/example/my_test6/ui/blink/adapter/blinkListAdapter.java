@@ -56,7 +56,6 @@ public class blinkListAdapter extends  BaseAdapter{
         blinkName.setText(blinkInfo.getUserDisplayName());
         blinkBlink.setText(blinkInfo.getContent());
         Glide.with(view).load(blinkInfo.getUserIconUrl()).into(blinkImage);
-
         return view;
     }
 
