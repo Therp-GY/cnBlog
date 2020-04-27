@@ -3,6 +3,8 @@ package com.example.my_test6.ui.blink;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
+
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -10,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
-import androidx.fragment.app.Fragment;
 
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
@@ -25,31 +25,29 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MineLoginFragment extends Fragment {
-
-
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class AttentionLoginFragment extends Fragment {
 
     private static final int BLINK_INIT = 1;
     private static final int BLINK_ADD = 2;
+    private String type = "following";
     private Integer pageIndex = 1;
     private Integer pageSize = 10;
     private String tag = "1";
     private PullToRefreshListView refreshListView;
     private List<blinkInfo> blinkInfoList = new ArrayList<>();
     private blinkListAdapter blinkListAdapter;
-    private static String TAG = "MineLoginFragment";
+    private static String TAG = "AttentionLoginFragment";
 
 
-    final Handler handler = new Handler() {
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             String s = (String) msg.obj;
@@ -73,16 +71,14 @@ public class MineLoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: ");
+        getBlink(handler, type, pageIndex.toString(), pageSize.toString(), "2", BLINK_INIT);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
-        getMineBlink(handler,pageIndex.toString(),pageSize.toString(),tag, BLINK_INIT);
-        View view = inflater.inflate(R.layout.blink_fragment_mine_login, container, false);
-        refreshListView = (PullToRefreshListView) view.findViewById(R.id.mine_list);
+        View view = inflater.inflate(R.layout.blink_fragment_attention_login, container, false);
+        refreshListView = (PullToRefreshListView) view.findViewById(R.id.attention_list);
         //设置可上拉刷新和下拉刷新
         refreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         //设置刷新时显示的文本
@@ -98,26 +94,22 @@ public class MineLoginFragment extends Fragment {
         refreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(final PullToRefreshBase<ListView> refreshView) {
-                // TODO Auto-generated method stub
                 new AsyncTask<Void, Void, Void>() {
                     @Override
                     protected Void doInBackground(Void... params) {
                         Log.d(TAG, "doInBackground: ");
-                        // TODO Auto-generated method stub
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                         return null;
                     }
 
                     protected void onPostExecute(Void result) {
-                        Log.d(TAG, "onPostExecute: ");
-                        blinkInfoList.clear();
+                        Log.d(TAG, "onPostExecute: ");blinkInfoList.clear();
                         pageIndex = 1;
-                        getMineBlink(handler,  pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
+                        getBlink(handler, type, pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
                         refreshView.onRefreshComplete();
                     }
                 }.execute();
@@ -142,7 +134,7 @@ public class MineLoginFragment extends Fragment {
                     protected void onPostExecute(Void result) {
                         Log.d(TAG, "onPostExecute: ");
                         pageIndex ++;
-                        getMineBlink(handler,  pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
+                        getBlink(handler, type, pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
                         refreshView.onRefreshComplete();
                     }
 
@@ -153,10 +145,10 @@ public class MineLoginFragment extends Fragment {
         return view;
     }
 
-    private void getMineBlink(final Handler handler, String pageIndex, String pageSize, String tag, final int what) {
+    private void getBlink(final Handler handler, String type, String pageIndex, String pageSize, String tag, final int what) {
         final String token = TokenPool.getTokenPool().getMyToken();
         String url = "https://api.cnblogs.com/api/statuses/";
-        url = url + "@" + "my" + "?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&tag=" + tag;
+        url = url + "@" + type + "?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&tag=" + tag;
         Log.d(TAG, "getBlink: " + url);
         GetUserApi getUserApi = new GetUserApi();
         getUserApi.getMyApi(handler, url, what);
