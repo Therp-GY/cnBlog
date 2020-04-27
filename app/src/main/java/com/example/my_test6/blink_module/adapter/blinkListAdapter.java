@@ -1,4 +1,4 @@
-package com.example.my_test6.ui.blink.adapter;
+package com.example.my_test6.blink_module.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.my_test6.R;
-import com.example.my_test6.ui.blink.blinkBean.blinkInfo;
+import com.example.my_test6.blink_module.blinkBean.blinkInfo;
 
 import java.util.List;
 
@@ -20,10 +20,12 @@ public class blinkListAdapter extends  BaseAdapter{
     private static String TAG = "GY blinkListAdapter";
     private  List<blinkInfo> blinkInfoList;
     private  LayoutInflater layoutInflater;
+
     public blinkListAdapter(Context context , List<blinkInfo> blinkInfoList) {
+        Log.d(TAG, "blinkListAdapter: context"+context);
         this.context = context;
         this.blinkInfoList = blinkInfoList;
-        layoutInflater = LayoutInflater.from(context);
+         layoutInflater = LayoutInflater.from(context);
         Log.d(TAG, "construct:"+this.blinkInfoList.size());
     }
 

@@ -1,4 +1,4 @@
-package com.example.my_test6.ui.blink;
+package com.example.my_test6.blink_module;
 
 import android.os.Bundle;
 
@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class DeliverLoginFragment extends Fragment implements View.OnClickListen
 
     private Button deliver;
     private TextView edit_text;
+    private CheckBox deliver_private;
     private static int DELIVER = 1;
     public DeliverLoginFragment() {
         // Required empty public constructor
@@ -49,6 +51,7 @@ public class DeliverLoginFragment extends Fragment implements View.OnClickListen
         View view = inflater.inflate(R.layout.blink_fragment_deliver_login, container, false);
         deliver = view.findViewById(R.id.deliver);
         edit_text = view.findViewById(R.id.edit_text);
+        deliver_private = view.findViewById(R.id.deliver_private);
         deliver.setOnClickListener(this);
         return view;
     }
@@ -68,9 +71,15 @@ public class DeliverLoginFragment extends Fragment implements View.OnClickListen
     }
 
     private RequestBody getDeliverBody(){
+        String isPrivate;
+        if (deliver_private.isChecked()){
+            isPrivate = "true";
+        }else{
+            isPrivate = "false";
+        }
         RequestBody body = new FormBody.Builder()
                 .add("Content",edit_text.getText().toString())
-                .add("IsPrivate","false")
+                .add("IsPrivate",isPrivate)
                 .build();
         return body;
     }

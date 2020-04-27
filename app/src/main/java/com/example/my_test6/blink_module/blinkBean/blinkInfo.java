@@ -1,4 +1,4 @@
-package com.example.my_test6.ui.blink.blinkBean;
+package com.example.my_test6.blink_module.blinkBean;
 
 public class blinkInfo {
     String Id;

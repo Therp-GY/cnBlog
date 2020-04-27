@@ -1,4 +1,4 @@
-package com.example.my_test6.ui.blink;
+package com.example.my_test6.blink_module;
 
 import android.os.Bundle;
 
@@ -14,9 +14,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
 
-public class MineFragment extends Fragment {
+public class AttentionFragment extends Fragment {
 
-    private static String TAG = "MineFragment";
+    private static String TAG = "AttentionFragment";
 
 
     @Override
@@ -28,7 +28,7 @@ public class MineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
-        View view = inflater.inflate(R.layout.blink_fragment_mine, container, false);
+        View view = inflater.inflate(R.layout.blink_fragment_attention, container, false);
         setUI();
         return view;
     }
@@ -37,12 +37,12 @@ public class MineFragment extends Fragment {
         if(TokenPool.getTokenPool().isLogin()){
             FragmentManager fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.mine_frame,new MineLoginFragment());
+            fragmentTransaction.replace(R.id.attention_frame,new AttentionLoginFragment());
             fragmentTransaction.commit();
         }else{
             FragmentManager fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.mine_frame,new LoginFragment());
+            fragmentTransaction.replace(R.id.attention_frame,new LoginFragment());
             fragmentTransaction.commit();
         }
     }

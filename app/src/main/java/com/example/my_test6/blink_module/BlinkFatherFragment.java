@@ -1,10 +1,13 @@
-package com.example.my_test6.ui.blink;
+package com.example.my_test6.blink_module;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -15,13 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.my_test6.Pool.TokenPool;
-import com.example.my_test6.R;
 import com.example.my_test6.netWork.GetUserApi;
-import com.example.my_test6.ui.blink.adapter.blinkListAdapter;
-import com.example.my_test6.ui.blink.blinkBean.blinkInfo;
+import com.example.my_test6.blink_module.adapter.blinkListAdapter;
+import com.example.my_test6.blink_module.blinkBean.blinkInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
@@ -49,7 +50,9 @@ public class BlinkFatherFragment extends Fragment {
     @IdRes
     int blinkList;
     private List<blinkInfo> blinkInfoList = new ArrayList<>();
-    private com.example.my_test6.ui.blink.adapter.blinkListAdapter blinkListAdapter;
+    private com.example.my_test6.blink_module.adapter.blinkListAdapter blinkListAdapter;
+    private Activity mActivity;
+    private static String TAG = "BlinkFatherFragment";
 
     public BlinkFatherFragment() {
         // Required empty public constructor
@@ -74,7 +77,8 @@ public class BlinkFatherFragment extends Fragment {
             blinkInfoList_temp = gson.fromJson(s, blinkListType);
             blinkInfoList.addAll(blinkInfoList_temp);
             if (msg.what == BLINK_INIT) {
-                blinkListAdapter = new blinkListAdapter(getActivity(), blinkInfoList);
+                Log.d("BlinkFatherFragment", "handleMessage: "+type+" "+mActivity);
+                blinkListAdapter = new blinkListAdapter(mActivity, blinkInfoList);
                 refreshListView.setAdapter(blinkListAdapter);
             }
             if (msg.what == BLINK_ADD) {
@@ -84,10 +88,19 @@ public class BlinkFatherFragment extends Fragment {
     };
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        Log.d(TAG, "onAttach: ");
+        super.onAttach(context);
+        this.mActivity = (Activity) context;
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         getBlink(handler, type, pageIndex.toString(), pageSize.toString(), tag, BLINK_INIT);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -1,6 +1,7 @@
 package com.example.my_test6;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 
 import com.example.my_test6.netWork.GetToken;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
+
+
     private void getToken(){
         GetToken tokenMy = new GetToken();
         tokenMy.getMyToken();
