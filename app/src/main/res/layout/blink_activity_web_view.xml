@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.blink.WebViewActivity">
+    tools:context=".blink_module.WebViewActivity">
 <WebView
     android:id="@+id/web_display"
     android:layout_width="match_parent"

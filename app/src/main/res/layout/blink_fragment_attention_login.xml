@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.blink.AttentionLoginFragment">
+    tools:context=".blink_module.AttentionLoginFragment">
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/attention_list"

@@ -1,8 +1,14 @@
-package com.example.my_test6.ui.blink;
+package com.example.my_test6.blink_module;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -14,17 +20,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.my_test6.Pool.TokenPool;
-import com.example.my_test6.R;
-import com.example.my_test6.netWork.GetApi;
 import com.example.my_test6.netWork.GetUserApi;
-import com.example.my_test6.ui.blink.adapter.blinkListAdapter;
-import com.example.my_test6.ui.blink.blinkBean.blinkInfo;
+import com.example.my_test6.blink_module.adapter.blinkListAdapter;
+import com.example.my_test6.blink_module.blinkBean.blinkInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -33,19 +36,35 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AttentionLoginFragment extends Fragment {
+public class BlinkFatherFragment extends Fragment {
 
     private static final int BLINK_INIT = 1;
     private static final int BLINK_ADD = 2;
-    private String type = "following";
-    private Integer pageIndex = 1;
-    private Integer pageSize = 10;
-    private String tag = "1";
+    private String type ;
+    private Integer pageIndex ;
+    private Integer pageSize ;
+    private String tag ;
     private PullToRefreshListView refreshListView;
+    @LayoutRes
+    int layout;
+    @IdRes
+    int blinkList;
     private List<blinkInfo> blinkInfoList = new ArrayList<>();
-    private blinkListAdapter blinkListAdapter;
-    private static String TAG = "AttentionLoginFragment";
+    private com.example.my_test6.blink_module.adapter.blinkListAdapter blinkListAdapter;
+    private Activity mActivity;
+    private static String TAG = "BlinkFatherFragment";
 
+    public BlinkFatherFragment() {
+        // Required empty public constructor
+    }
+    public BlinkFatherFragment(String type, Integer pageIndex, Integer pageSize, String tag, @LayoutRes int layout, @IdRes int blinkList) {
+        this.type = type;
+        this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
+        this.tag = tag;
+        this.layout = layout;
+        this.blinkList = blinkList;
+    }
 
     private Handler handler = new Handler() {
         @Override
@@ -58,8 +77,8 @@ public class AttentionLoginFragment extends Fragment {
             blinkInfoList_temp = gson.fromJson(s, blinkListType);
             blinkInfoList.addAll(blinkInfoList_temp);
             if (msg.what == BLINK_INIT) {
-                Log.d(TAG, "handleMessage: list" + blinkInfoList.size());
-                blinkListAdapter = new blinkListAdapter(getActivity(), blinkInfoList);
+                Log.d("BlinkFatherFragment", "handleMessage: "+type+" "+mActivity);
+                blinkListAdapter = new blinkListAdapter(mActivity, blinkInfoList);
                 refreshListView.setAdapter(blinkListAdapter);
             }
             if (msg.what == BLINK_ADD) {
@@ -69,16 +88,25 @@ public class AttentionLoginFragment extends Fragment {
     };
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getBlink(handler, type, pageIndex.toString(), pageSize.toString(), "2", BLINK_INIT);
+    public void onAttach(@NonNull Context context) {
+        Log.d(TAG, "onAttach: ");
+        super.onAttach(context);
+        this.mActivity = (Activity) context;
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
+        super.onCreate(savedInstanceState);
+        getBlink(handler, type, pageIndex.toString(), pageSize.toString(), tag, BLINK_INIT);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.blink_fragment_attention_login, container, false);
-        refreshListView = (PullToRefreshListView) view.findViewById(R.id.attention_list);
+        View view = inflater.inflate(layout, container, false);
+        refreshListView = (PullToRefreshListView) view.findViewById(blinkList);
         //设置可上拉刷新和下拉刷新
         refreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         //设置刷新时显示的文本
@@ -97,7 +125,6 @@ public class AttentionLoginFragment extends Fragment {
                 new AsyncTask<Void, Void, Void>() {
                     @Override
                     protected Void doInBackground(Void... params) {
-                        Log.d(TAG, "doInBackground: ");
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
@@ -107,7 +134,6 @@ public class AttentionLoginFragment extends Fragment {
                     }
 
                     protected void onPostExecute(Void result) {
-                        Log.d(TAG, "onPostExecute: ");blinkInfoList.clear();
                         pageIndex = 1;
                         getBlink(handler, type, pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
                         refreshView.onRefreshComplete();
@@ -120,19 +146,15 @@ public class AttentionLoginFragment extends Fragment {
                 new AsyncTask<Void, Void, Void>() {
                     @Override
                     protected Void doInBackground(Void... params) {
-                        Log.d(TAG, "doInBackground: ");
-                        // TODO Auto-generated method stub
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                         return null;
                     }
 
                     protected void onPostExecute(Void result) {
-                        Log.d(TAG, "onPostExecute: ");
                         pageIndex ++;
                         getBlink(handler, type, pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
                         refreshView.onRefreshComplete();
@@ -145,11 +167,10 @@ public class AttentionLoginFragment extends Fragment {
         return view;
     }
 
-    private void getBlink(final Handler handler, String type, String pageIndex, String pageSize, String tag, final int what) {
+    public void getBlink(final Handler handler, String type, String pageIndex, String pageSize, String tag, final int what) {
         final String token = TokenPool.getTokenPool().getMyToken();
         String url = "https://api.cnblogs.com/api/statuses/";
         url = url + "@" + type + "?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&tag=" + tag;
-        Log.d(TAG, "getBlink: " + url);
         GetUserApi getUserApi = new GetUserApi();
         getUserApi.getMyApi(handler, url, what);
     }

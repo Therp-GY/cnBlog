@@ -1,4 +1,4 @@
-package com.example.my_test6.ui.blink;
+package com.example.my_test6.blink_module;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
