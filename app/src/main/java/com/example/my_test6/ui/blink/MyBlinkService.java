@@ -6,9 +6,9 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.example.my_test6.ui.blink.domain.accessToken;
-import com.example.my_test6.ui.blink.domain.blinkInfo;
-import com.example.my_test6.ui.blink.domain.clientCredential;
+import com.example.my_test6.ui.blink.blinkBean.accessToken;
+import com.example.my_test6.ui.blink.blinkBean.blinkInfo;
+import com.example.my_test6.ui.blink.blinkBean.clientCredential;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

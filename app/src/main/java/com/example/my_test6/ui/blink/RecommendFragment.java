@@ -16,9 +16,8 @@ import android.widget.ListView;
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
 import com.example.my_test6.netWork.GetApi;
-import com.example.my_test6.netWork.GetUserApi;
 import com.example.my_test6.ui.blink.adapter.blinkListAdapter;
-import com.example.my_test6.ui.blink.domain.blinkInfo;
+import com.example.my_test6.ui.blink.blinkBean.blinkInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
@@ -34,6 +33,7 @@ public class RecommendFragment extends Fragment {
     private static final int BLINK_INIT = 1;
     private static final int BLINK_ADD = 2;
     private Integer pageIndex = 1;
+    private Integer pageSize = 50;
     private PullToRefreshListView refreshListView;
     private List<blinkInfo> blinkInfoList = new ArrayList<>();
     private blinkListAdapter blinkListAdapter;
@@ -70,7 +70,7 @@ public class RecommendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //  pageIndex和pageSize有用，表示页码和页容量
-        getBlink(handler, "2", pageIndex.toString(), "50", "2", BLINK_INIT);
+        getBlink(handler, "2", pageIndex.toString(), pageSize.toString(), "2", BLINK_INIT);
         View view = inflater.inflate(R.layout.blink_fragment_recommend, container, false);
         refreshListView = (PullToRefreshListView) view.findViewById(R.id.recommend_list);
         //设置可上拉刷新和下拉刷新
@@ -108,7 +108,7 @@ public class RecommendFragment extends Fragment {
                         Log.d(TAG, "onPostExecute: ");
                         blinkInfoList.clear();
                         pageIndex = 1;
-                        getBlink(handler, "2", pageIndex.toString(), "50", "2", BLINK_ADD);
+                        getBlink(handler, "2", pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
                         refreshView.onRefreshComplete();
                     }
 
@@ -135,7 +135,7 @@ public class RecommendFragment extends Fragment {
                     protected void onPostExecute(Void result) {
                         Log.d(TAG, "onPostExecute: ");
                         pageIndex++;
-                        getBlink(handler, "2", pageIndex.toString(), "50", "2", BLINK_ADD);
+                        getBlink(handler, "2", pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
                         refreshView.onRefreshComplete();
                     }
 

@@ -1,34 +1,15 @@
 package com.example.my_test6;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.view.WindowManager;
 
 import com.example.my_test6.netWork.GetToken;
-import com.example.my_test6.ui.blink.domain.accessToken;
-import com.example.my_test6.ui.blink.domain.clientCredential;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
