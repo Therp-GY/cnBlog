@@ -35,7 +35,6 @@
         android:layout_height="250dp"
         android:layout_below="@+id/l_lay_out"
         android:background="@drawable/edit_background"
-        android:layout_alignRight="@+id/deliver_private"
         android:hint="你在做什么？你在想什么？"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="186dp" />

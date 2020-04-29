@@ -1,7 +1,6 @@
 package com.example.my_test6.Pool;
 
-import com.example.my_test6.Bean.Token;
-import com.example.my_test6.netWork.TokenString;
+import com.example.my_test6.Pool.netWork.TokenString;
 
 public class TokenPool {
     private static  TokenPool tokenPool = null;

@@ -3,7 +3,7 @@ package com.example.my_test6.blink_module;
 import android.os.Handler;
 
 import com.example.my_test6.R;
-import com.example.my_test6.netWork.GetApi;
+import com.example.my_test6.Pool.netWork.GetApi;
 
 
 

@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.my_test6.Pool.TokenPool;
-import com.example.my_test6.netWork.GetUserApi;
+import com.example.my_test6.Pool.netWork.GetUserApi;
 import com.example.my_test6.blink_module.adapter.blinkListAdapter;
 import com.example.my_test6.blink_module.blinkBean.blinkInfo;
 import com.google.gson.Gson;
@@ -134,6 +134,7 @@ public class BlinkFatherFragment extends Fragment {
                     }
 
                     protected void onPostExecute(Void result) {
+                        blinkInfoList.clear();
                         pageIndex = 1;
                         getBlink(handler, type, pageIndex.toString(), pageSize.toString(), "2", BLINK_ADD);
                         refreshView.onRefreshComplete();

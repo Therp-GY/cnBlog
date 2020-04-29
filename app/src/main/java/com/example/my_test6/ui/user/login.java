@@ -20,8 +20,8 @@ import android.webkit.WebViewClient;
 import com.example.my_test6.Pool.MinePool;
 import com.example.my_test6.Pool.TokenPool;
 import com.example.my_test6.R;
-import com.example.my_test6.netWork.GetUserApi;
-import com.example.my_test6.netWork.GetUserToken;
+import com.example.my_test6.Pool.netWork.GetUserApi;
+import com.example.my_test6.Pool.netWork.GetUserToken;
 import com.example.my_test6.ui.user.GsonBean.Users;
 import com.google.gson.Gson;
 
